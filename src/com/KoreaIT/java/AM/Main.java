@@ -47,10 +47,10 @@ public class Main {
           continue;
         } else {
 
-          System.out.println("번호  |  제목");
+          System.out.println("번호   |   제목   |   조회수");
           for (int i = articles.size() - 1; i >= 0; i--) {
             Article article = articles.get(i);
-            System.out.printf("%d   |   %s\n", article.id, article.title);
+            System.out.printf("%2d   |   %s   |   %d\n", article.id, article.title, article.viewCnt);
           }
         }
 
@@ -74,10 +74,13 @@ public class Main {
           continue;
         }
 
+        foundArticle.increaseViewCnt();
+
         System.out.printf("번호 : %d\n", foundArticle.id);
         System.out.printf("날짜 : %s\n", foundArticle.regDate);
         System.out.printf("제목 : %s\n", foundArticle.title);
         System.out.printf("내용 : %s\n", foundArticle.body);
+        System.out.printf("조회 : %d\n", foundArticle.viewCnt);
 
       } else if (cmd.startsWith("article modify ")) {
         String[] cmdBits = cmd.split(" ");
@@ -147,6 +150,7 @@ class Article {
   String regDate;
   String title;
   String body;
+  int viewCnt;
 
 
   public Article(int id, String regDate, String title, String body) {
@@ -154,5 +158,10 @@ class Article {
     this.regDate = regDate;
     this.title = title;
     this.body = body;
+    this.viewCnt = 0;
+  }
+
+  public void increaseViewCnt() {
+    viewCnt++;
   }
 }
