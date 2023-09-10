@@ -1,8 +1,8 @@
 package com.KoreaIT.java.AM.dto;
 
-public class Article {
-  public int id;
-  public String regDate;
+import com.KoreaIT.java.AM.Dto;
+
+public class Article extends Dto {
   public String title;
   public String body;
   public int viewCnt;
