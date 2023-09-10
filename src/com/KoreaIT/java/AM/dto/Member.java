@@ -1,7 +1,5 @@
 package com.KoreaIT.java.AM.dto;
 
-import com.KoreaIT.java.AM.Dto;
-
 public class Member extends Dto {
   public String loginId;
   public String loginPw;

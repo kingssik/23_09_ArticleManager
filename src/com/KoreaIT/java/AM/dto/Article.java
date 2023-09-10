@@ -1,7 +1,5 @@
 package com.KoreaIT.java.AM.dto;
 
-import com.KoreaIT.java.AM.Dto;
-
 public class Article extends Dto {
   public String title;
   public String body;

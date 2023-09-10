@@ -1,4 +1,4 @@
-package com.KoreaIT.java.AM;
+package com.KoreaIT.java.AM.dto;
 
 public class Dto {
   public int id;
