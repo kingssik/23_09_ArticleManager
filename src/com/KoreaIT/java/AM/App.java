@@ -48,15 +48,35 @@ public class App {
 
         System.out.printf("%d번 글이 생성 되었습니다\n", id);
 
-      } else if (cmd.equals("article list")) {
+      } else if (cmd.startsWith("article list")) {
+        String searchKeyword = cmd.substring("article list".length()).trim();
+
         if (articles.size() == 0) {
           System.out.println("게시글이 없습니다");
           continue;
         } else {
 
+          List<Article> forPrintArticles = articles;
+
+          if (searchKeyword.length() > 0) {
+            forPrintArticles = new ArrayList<>();
+
+            for (Article article : articles) {
+              if (article.title.contains(searchKeyword)) {
+                forPrintArticles.add(article);
+              }
+            }
+
+            if (forPrintArticles.size() == 0) {
+              System.out.println("검색결과가 없습니다");
+              continue;
+            }
+
+          }
+
           System.out.println("번호   |   제목   |   조회수");
-          for (int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
+          for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+            Article article = forPrintArticles.get(i);
             System.out.printf("%2d   |   %s   |   %d\n", article.id, article.title, article.viewCnt);
           }
         }
