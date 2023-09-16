@@ -13,9 +13,9 @@ public class ArticleController extends Controller {
   private String cmd;
   private String actionMethodName;
 
-  public ArticleController(Scanner sc, List<Article> articles) {
+  public ArticleController(Scanner sc) {
     this.sc = sc;
-    this.articles = articles;
+    articles = new ArrayList<Article>();
   }
 
   @Override
@@ -42,7 +42,7 @@ public class ArticleController extends Controller {
     }
   }
 
-  public void doWrite() {
+  private void doWrite() {
     int id = articles.size() + 1;
 
     String regDate = Util.getNowDate();
@@ -57,7 +57,7 @@ public class ArticleController extends Controller {
     System.out.printf("%d번 글이 생성 되었습니다\n", id);
   }
 
-  public void showList() {
+  private void showList() {
     String searchKeyword = cmd.substring("article list".length()).trim();
 
     if (articles.size() == 0) {
@@ -90,7 +90,7 @@ public class ArticleController extends Controller {
     }
   }
 
-  public void showDetail() {
+  private void showDetail() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
@@ -109,7 +109,7 @@ public class ArticleController extends Controller {
     System.out.printf("조회 : %d\n", foundArticle.viewCnt);
   }
 
-  public void doModify() {
+  private void doModify() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
@@ -131,7 +131,7 @@ public class ArticleController extends Controller {
     System.out.printf("%d번 게시물이 수정 되었습니다\n", id);
   }
 
-  public void doDelete() {
+  private void doDelete() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
@@ -144,7 +144,14 @@ public class ArticleController extends Controller {
 
     articles.remove(foundIndex);
     System.out.printf("%d번 게시물이 삭제 되었습니다\n", id);
+  }
 
+  public void makeTestData() {
+    System.out.println("테스트데이터를 생성 합니다");
+
+    articles.add(new Article(1, Util.getNowDate(), "title1", "body1", 11));
+    articles.add(new Article(2, Util.getNowDate(), "title2", "body2", 22));
+    articles.add(new Article(3, Util.getNowDate(), "title3", "body3", 33));
   }
 
   private Article getArticleById(int id) {
