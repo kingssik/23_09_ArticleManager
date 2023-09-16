@@ -44,6 +44,7 @@ public class App {
       String actionMethodName = cmdBits[1];
 
       Controller controller = null;
+
       if (controllerName.equals("article")) {
         controller = articleController;
       } else if (controllerName.equals("member")) {
