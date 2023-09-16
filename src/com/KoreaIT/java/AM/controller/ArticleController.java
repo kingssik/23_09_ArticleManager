@@ -149,14 +149,6 @@ public class ArticleController extends Controller {
     System.out.printf("%d번 게시물이 삭제 되었습니다\n", id);
   }
 
-  public void makeTestData() {
-    System.out.println("테스트데이터를 생성 합니다");
-
-    articles.add(new Article(1, Util.getNowDate(), "title1", "body1", 11));
-    articles.add(new Article(2, Util.getNowDate(), "title2", "body2", 22));
-    articles.add(new Article(3, Util.getNowDate(), "title3", "body3", 33));
-  }
-
   private Article getArticleById(int id) {
     int idx = getArticleIndexById(id);
     if (idx != -1) {
@@ -177,4 +169,11 @@ public class ArticleController extends Controller {
     return -1;
   }
 
+  public void makeTestData() {
+    System.out.println("게시물 테스트데이터를 생성 합니다");
+
+    articles.add(new Article(1, Util.getNowDate(), "title1", "body1", 11));
+    articles.add(new Article(2, Util.getNowDate(), "title2", "body2", 22));
+    articles.add(new Article(3, Util.getNowDate(), "title3", "body3", 33));
+  }
 }

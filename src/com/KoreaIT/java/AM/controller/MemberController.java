@@ -136,4 +136,12 @@ public class MemberController extends Controller {
     }
     return members.get(idx);
   }
+
+  public void makeTestData() {
+    System.out.println("회원 테스트데이터를 생성 합니다");
+
+    members.add(new Member(1, Util.getNowDate(), "admin", "admin", "관리자"));
+    members.add(new Member(2, Util.getNowDate(), "test1", "test1", "회원1"));
+    members.add(new Member(3, Util.getNowDate(), "test2", "test2", "회원2"));
+  }
 }
