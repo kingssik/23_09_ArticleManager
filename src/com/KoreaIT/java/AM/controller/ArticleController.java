@@ -25,6 +25,10 @@ public class ArticleController extends Controller {
 
     switch (actionMethodName) {
       case "write":
+        if (isLogined() == false) {
+          System.out.println("로그인 후 이용하세요");
+          break;
+        }
         doWrite();
         break;
       case "list":
@@ -54,7 +58,7 @@ public class ArticleController extends Controller {
     System.out.printf("내용 : ");
     String body = sc.nextLine();
 
-    Article article = new Article(id, regDate, title, body);
+    Article article = new Article(id, regDate, loginedMember.id, title, body);
     articles.add(article);
 
     System.out.printf("%d번 글이 생성 되었습니다\n", id);
@@ -85,10 +89,10 @@ public class ArticleController extends Controller {
         }
       }
 
-      System.out.println("번호   |   제목   |   조회수");
+      System.out.println("번호   |   작성자   |   제목     |   조회수");
       for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
         Article article = forPrintArticles.get(i);
-        System.out.printf("%2d   |   %s   |   %d\n", article.id, article.title, article.viewCnt);
+        System.out.printf("%4d   |     %d      |   %s   |   %d\n", article.id, article.memberId, article.title, article.viewCnt);
       }
     }
   }
@@ -107,6 +111,7 @@ public class ArticleController extends Controller {
 
     System.out.printf("번호 : %d\n", foundArticle.id);
     System.out.printf("날짜 : %s\n", foundArticle.regDate);
+    System.out.printf("작성자 : %d\n", foundArticle.memberId);
     System.out.printf("제목 : %s\n", foundArticle.title);
     System.out.printf("내용 : %s\n", foundArticle.body);
     System.out.printf("조회 : %d\n", foundArticle.viewCnt);
@@ -172,8 +177,8 @@ public class ArticleController extends Controller {
   public void makeTestData() {
     System.out.println("게시물 테스트데이터를 생성 합니다");
 
-    articles.add(new Article(1, Util.getNowDate(), "title1", "body1", 11));
-    articles.add(new Article(2, Util.getNowDate(), "title2", "body2", 22));
-    articles.add(new Article(3, Util.getNowDate(), "title3", "body3", 33));
+    articles.add(new Article(1, Util.getNowDate(), 1, "title1", "body1", 11));
+    articles.add(new Article(2, Util.getNowDate(), 2, "title2", "body2", 22));
+    articles.add(new Article(3, Util.getNowDate(), 3, "title3", "body3", 33));
   }
 }
