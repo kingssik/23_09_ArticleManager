@@ -3,9 +3,9 @@ package com.KoreaIT.java.AM.controller;
 import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dto.Article;
 import com.KoreaIT.java.AM.dto.Member;
+import com.KoreaIT.java.AM.service.ArticleService;
 import com.KoreaIT.java.AM.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,10 +14,11 @@ public class ArticleController extends Controller {
   private List<Article> articles;
   private String cmd;
   private String actionMethodName;
+  private ArticleService articleService;
 
   public ArticleController(Scanner sc) {
     this.sc = sc;
-    articles = Container.articleDao.articles;
+    articleService = Container.articleService;
   }
 
   @Override
@@ -64,44 +65,24 @@ public class ArticleController extends Controller {
 
   private void showList() {
     String searchKeyword = cmd.substring("article list".length()).trim();
+    List<Article> forPrintArticles = Container.articleService.getForPrintArticles(searchKeyword);
 
-    if (articles.size() == 0) {
-      System.out.println("게시글이 없습니다");
-      return;
-    } else {
+    System.out.println("번호   |   작성자   |   제목     |   조회수");
+    for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+      Article article = forPrintArticles.get(i);
 
-      List<Article> forPrintArticles = articles;
+      String writerName = null;
 
-      if (searchKeyword.length() > 0) {
-        forPrintArticles = new ArrayList<>();
+      List<Member> members = Container.memberDao.members;
 
-        for (Article article : articles) {
-          if (article.title.contains(searchKeyword)) {
-            forPrintArticles.add(article);
-          }
-        }
-
-        if (forPrintArticles.size() == 0) {
-          System.out.println("검색결과가 없습니다");
-          return;
+      for (Member member : members) {
+        if (article.memberId == member.id) {
+          writerName = member.name;
+          break;
         }
       }
 
-      System.out.println("번호   |   작성자   |   제목     |   조회수");
-      for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
-        Article article = forPrintArticles.get(i);
-
-        String writerName = null;
-        List<Member> members = Container.memberDao.members;
-        for (Member member : members) {
-          if (article.memberId == member.id) {
-            writerName = member.name;
-            break;
-          }
-        }
-
-        System.out.printf("%4d   |     %s      |   %s   |   %d\n", article.id, writerName, article.title, article.viewCnt);
-      }
+      System.out.printf("%4d   |     %s      |   %s   |   %d\n", article.id, writerName, article.title, article.viewCnt);
     }
   }
 
