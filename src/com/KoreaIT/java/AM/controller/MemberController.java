@@ -41,21 +41,11 @@ public class MemberController extends Controller {
   }
 
   private void doLogout() {
-    if (isLogined() == false) {
-      System.out.println("로그아웃 상태입니다.");
-      return;
-    }
-
     loginedMember = null;
     System.out.println("로그아웃 되었습니다.");
   }
 
   private void doLogin() {
-    if (isLogined()) {
-      System.out.println("로그아웃 후 이용하세요");
-      return;
-    }
-
     String loginId = null;
     String loginPw = null;
 

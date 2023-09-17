@@ -9,7 +9,7 @@ public abstract class Controller {
 
   public abstract void makeTestData();
 
-  public boolean isLogined() {
+  public static boolean isLogined() {
     return loginedMember != null;
   }
 }
