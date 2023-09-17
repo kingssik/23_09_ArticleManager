@@ -1,6 +1,8 @@
 package com.KoreaIT.java.AM.controller;
 
+import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dto.Article;
+import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.util.Util;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class ArticleController extends Controller {
 
   public ArticleController(Scanner sc) {
     this.sc = sc;
-    articles = new ArrayList<Article>();
+    articles = Container.articleDao.articles;
   }
 
   @Override
@@ -88,7 +90,17 @@ public class ArticleController extends Controller {
       System.out.println("번호   |   작성자   |   제목     |   조회수");
       for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
         Article article = forPrintArticles.get(i);
-        System.out.printf("%4d   |     %d      |   %s   |   %d\n", article.id, article.memberId, article.title, article.viewCnt);
+
+        String writerName = null;
+        List<Member> members = Container.memberDao.members;
+        for (Member member : members) {
+          if (article.memberId == member.id) {
+            writerName = member.name;
+            break;
+          }
+        }
+
+        System.out.printf("%4d   |     %s      |   %s   |   %d\n", article.id, writerName, article.title, article.viewCnt);
       }
     }
   }
